@@ -1,0 +1,58 @@
+body {
+    background-color: black;
+}
+
+
+#nav-bar > h1 {
+    margin: 0px;
+    font-size: min(2vw, 7vh);
+    color: aqua;
+}
+
+#nav-bar > h1 a, a:hover, a:focus, a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+.basic-form {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.container {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    min-width: 35vw;
+    max-width: 100%;
+}
+
+#form-title {
+    align-self: center;
+    font-size: min(3.5vw, 8vh);
+}
+
+.input {
+    margin: 10px 0px;
+    font-size: min(1.5vw, 4vh);
+}
+
+.submit {
+    margin: 10px 0px;
+    align-self: center;
+    width: 35%;
+    font-size: min(1.5vw, 4vh);
+}
+
+.hidden {
+    display: none;
+}
+
+#response {
+    margin: 5vh 0;
+    border: 0;
+    align-self: center;
+}

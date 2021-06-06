@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+  <!--<link rel="stylesheet" th:href="@{/public/dark-style.css}">
+  <link rel="stylesheet" href="../static/dark-style.css">-->
+    <title>Title</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script type="text/javascript">
+    // Load google charts
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    // Draw the chart and set the chart values
+    function drawChart() {
+      $.ajax({
+        url: "/all",
+        dataType: "json",
+        success: function (jsonData) {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Task');
+            data.addColumn('number', 'Hours per Day');
+            data.addRow([jsonData[1].nick, jsonData[1].volume]);
+            data.addRow([jsonData[2].nick, jsonData[2].volume]);
+            // assumes "word" is a string and "count" is a number
+            /*data.addColumn('string', 'nick');
+            data.addColumn('number', 'volume');
+            console.warn(jsonData[1].nick);
+            data.addRow('ahoj', 300 );
+            data.addRow('nazdar',700);*/
+            /*for (var i = 0; i < jsonData.length; i++) {
+                data.addRow([jsonData[i].nick, jsonData[i].volume]);
+            }*/
+            // Optional; add a title and set the width and height of the chart
+            var options = {'title':'My Average Day', 'width':550, 'height':400};
+
+            // Display the chart inside the <div> element with id="piechart"
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);
+        }
+      });
+
+        /*var jsonData = $.ajax({
+            url: "/all",
+            dataType: "json"
+        }).responseText;
+
+
+        var data = new google.visualization.DataTable(jsonData);*/
+
+
+    }
+  </script>
+</head>
+<body>
+<nav id="nav-bar">
+  <h1>
+    <a href="/">
+      Drink tracker
+    </a>
+  </h1>
+</nav>
+<div id="piechart"></div>
+</body>
+</html>

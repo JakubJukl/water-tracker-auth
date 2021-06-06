@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login page</title>
+    <link th:href="@{/public/dark-style.css}" rel="stylesheet" />
+</head>
+<body>
+<nav id="nav-bar">
+    <h1>
+        <a href="/">
+            Drink tracker
+        </a>
+    </h1>
+</nav>
+<form class="basic-form" th:action="@{/login}" method="post">
+    <div class="container">
+        <h1 id="form-title">Login page</h1>
+        <label class="hidden" for="username">Username</label>
+        <input class="input" type="text" id="username" name="username" placeholder="username"/>
+        <label class="hidden" for="password">Password</label>
+        <input class="input" type="password" id="password" name="password" placeholder="password"/>
+        <input class="submit" id="submit" type="submit" value="Log in" />
+        <p th:if="${err}" class="error">Wrong user or password</p>
+    </div>
+</form>
+</body>
+</html>
