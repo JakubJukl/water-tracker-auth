@@ -2,6 +2,7 @@ package com.example.watertracker;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
@@ -14,10 +15,7 @@ public class MainController {
     private DrinkRepository drinkRepo;
     @Autowired
     private UserRepository userRepo;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private SecurityService securityService;
+
 
     @PostMapping(path="/add")
     public @ResponseBody String addNewRecord (@RequestParam Integer volume,
@@ -67,7 +65,6 @@ public class MainController {
 
     @GetMapping(path = {"", "/record"})
     public String record() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return "record";
     }
 
@@ -76,7 +73,7 @@ public class MainController {
         return "chart";
     }
 
-    @GetMapping(path="/login")
+    @GetMapping(path={"/login", "/public/login"})
     public String login(@RequestParam(defaultValue = "false") Boolean err, Model model) {
         model.addAttribute("err", err);
         return "login";
@@ -93,13 +90,16 @@ public class MainController {
         if (username.isBlank() || password.isBlank()){
             throw new IllegalArgumentException("All fields must be filled with valid values.");
         }
+        if (userRepo.findByUsername(username) != null){
+            return "redirect:sign?err=true";
+        }
         User n = new User();
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(password);
+        n.setPassword(encodedPassword);
         n.setUsername(username);
-        n.setPassword(password);
-        userService.save(n);
-        securityService.autoLogin(n.getUsername(), n.getPassword());
         userRepo.save(n);
-        return "redirect: /login";
+        return "redirect:login";
     }
 
 }
