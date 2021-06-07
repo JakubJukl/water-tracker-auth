@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login page</title>
-    <link th:href="@{/public/dark-style.css}" rel="stylesheet" />
+    <link th:href="@{/public/dark-style.css}" rel="stylesheet"/>
+    <!--<link rel="stylesheet" href="../static/public/dark-style.css">-->
 </head>
 <body>
 <nav id="nav-bar">
@@ -19,8 +20,11 @@
         <input class="input" type="text" id="username" name="username" placeholder="username"/>
         <label class="hidden" for="password">Password</label>
         <input class="input" type="password" id="password" name="password" placeholder="password"/>
-        <input class="submit" id="submit" type="submit" value="Log in" />
-        <p th:if="${err}" class="error">Wrong user or password</p>
+        <div id="buttons">
+            <input class="submit" id="submit" type="submit" value="Log in" />
+            <input type="button" class="submit" onclick="location.href='/public/sign';" value="Sign up" />
+        </div>
+        <p class="error" th:text="${message}"/>
     </div>
 </form>
 </body>

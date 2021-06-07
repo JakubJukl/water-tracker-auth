@@ -1,26 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/public/dark-style.css}">
-    <!--<link rel="stylesheet" href="../static/dark-style.css">-->
+    <!--<link rel="stylesheet" href="../static/public/dark-style.css">-->
    <title>Record drink</title>
-    <script>
-        function resizeIframe(obj) {
-            let doc = obj.contentDocument;
-            doc.body.innerHTML = doc.body.innerHTML +
-                '<style>' +
-                '   body {' +
-                'color:white;' +
-                'background-color: black;' +
-                'font-size: 20px;' +
-                'display: flex;' +
-                'flex-direction: column;' +
-                'align-items: center;' +
-                '}' +
-                '</style>';
-        }
-    </script>
 
 </head>
 <body>
@@ -30,24 +15,27 @@
                Drink tracker
            </a>
        </h1>
+       <div class="dropdown">
+           <span>User: </span><a id="username" sec:authentication="name"></a>
+           <form class="dropdown-content" method="post" th:action="@{/logout}">
+               <button type="submit" class="dropdown-item">Logout</button>
+           </form>
+       </div>
    </nav>
-   <form class="basic-form" action="/add" method="post" target="responseFrame">
+   <form id="record-form" class="basic-form" th:action="@{/record}" method="post">
        <div class="container">
            <h1 id="form-title">What did you drink?</h1>
            <label for="volume" class="hidden">How much did you drink: </label>
            <input class="input" id="volume" placeholder="Volume" name="volume" type="text">
-           <label for="nick" class="hidden">What's your nickname: </label>
-           <input class="input" id="nick" placeholder="Nickname" name="nick" type="text">
            <label for="type" class="hidden">What did you drink: </label>
            <select class="input" id="type" name="type">
                <option th:each="drinkOpt : ${T(com.example.watertracker.DrinkRecord.Type_of_drink).values()}"
                    th:value="${drinkOpt}" th:text="${drinkOpt}"></option>
            </select>
            <input class="submit" id="submit-drink" type="submit" value="Send">
-           <iframe id="response" name="responseFrame" style="border:0" onload="resizeIframe(this)" scrolling="no"></iframe>
-       </div>
+           <p class="error" th:text="${message}"/>
+      </div>
    </form>
-   <div class="response-container">
-          </div>
+
 </body>
 </html>
