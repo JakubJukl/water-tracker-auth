@@ -1,6 +1,7 @@
-package com.example.watertracker;
+package com.example.watertracker.db;
 
 import java.util.List;
+
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.*;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;

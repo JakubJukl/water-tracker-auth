@@ -1,5 +1,6 @@
-package com.example.watertracker;
+package com.example.watertracker.security;
 
+import com.example.watertracker.db.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

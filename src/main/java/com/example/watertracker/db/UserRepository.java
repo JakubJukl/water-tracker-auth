@@ -1,4 +1,4 @@
-package com.example.watertracker;
+package com.example.watertracker.db;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

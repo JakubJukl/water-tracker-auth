@@ -1,15 +1,10 @@
-package com.example.watertracker;
+package com.example.watertracker.security;
 
+import com.example.watertracker.db.User;
+import com.example.watertracker.db.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.*;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MyUserDetailsService implements UserDetailsService {
@@ -24,6 +19,6 @@ public class MyUserDetailsService implements UserDetailsService {
         }
         return new MyUserDetails(user);
     }
-    
+
 
 }

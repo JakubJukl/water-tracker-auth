@@ -1,6 +1,6 @@
-package com.example.watertracker;
+package com.example.watertracker.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.watertracker.security.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;

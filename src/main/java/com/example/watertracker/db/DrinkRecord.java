@@ -1,4 +1,4 @@
-package com.example.watertracker;
+package com.example.watertracker.db;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
