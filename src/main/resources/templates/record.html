@@ -15,6 +15,11 @@
                Drink tracker
            </a>
        </h1>
+       <h2>
+           <a href="/chart">
+               Charts
+           </a>
+       </h2>
        <div class="dropdown">
            <span>User: </span><a id="username" sec:authentication="name"></a>
            <form class="dropdown-content" method="post" th:action="@{/logout}">
@@ -22,11 +27,11 @@
            </form>
        </div>
    </nav>
-   <form id="record-form" class="basic-form" th:action="@{/record}" method="post">
+   <form id="record-form" class="basic-form" th:action="@{/record}" method="post" autocomplete="off">
        <div class="container">
            <h1 id="form-title">What did you drink?</h1>
            <label for="volume" class="hidden">How much did you drink: </label>
-           <input class="input" id="volume" placeholder="Volume" name="volume" type="text">
+           <input class="input" id="volume" placeholder="Volume" name="volume" type="number" autofocus>
            <label for="type" class="hidden">What did you drink: </label>
            <select class="input" id="type" name="type">
                <option th:each="drinkOpt : ${T(com.example.watertracker.db.DrinkRecord.Type_of_drink).values()}"

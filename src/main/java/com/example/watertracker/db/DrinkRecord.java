@@ -9,9 +9,12 @@ public class DrinkRecord {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    private String nick;
     private int volume;
     private LocalDateTime created = LocalDateTime.now();
+
+    @ManyToOne
+    @JoinColumn(name="username", nullable = false)
+    private User user;
 
     public Type_of_drink getType() {
         return type;
@@ -23,19 +26,31 @@ public class DrinkRecord {
 
     private Type_of_drink type;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public enum Type_of_drink {
         WATER,
         ALCOHOL,
         SWEET,
         OTHER
-    }
-
-    public String getNick() {
-        return nick;
-    }
-
-    public void setNick(String nick) {
-        this.nick = nick;
     }
 
     public int getVolume() {
@@ -50,11 +65,4 @@ public class DrinkRecord {
         return created;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 }

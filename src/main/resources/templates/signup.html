@@ -12,11 +12,11 @@
     </a>
   </h1>
 </nav>
-<form class="basic-form" th:action="@{/public/sign}" method="post">
+<form class="basic-form" th:action="@{/public/sign}" method="post" autocomplete="off">
   <div class="container">
     <h1 id="form-title">Signup page</h1>
     <label class="hidden" for="username">Username</label>
-    <input class="input" type="text" id="username" name="username" placeholder="username"/>
+    <input class="input" type="text" id="username" name="username" placeholder="username" autofocus/>
     <label class="hidden" for="password">Password</label>
     <input class="input" type="password" id="password" name="password" placeholder="password"/>
     <input class="submit" id="submit" type="submit" value="Sign up"/>

@@ -13,7 +13,19 @@ body {
     color: aqua;
 }
 
+#nav-bar > h2 {
+    margin: 0px;
+    font-size: min(1.5vw, 5vh);
+    color: plum;
+    align-self: center;
+}
+
 #nav-bar > h1 a, a:hover, a:focus, a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+#nav-bar > h2 a, a:hover, a:focus, a:active {
     text-decoration: none;
     color: inherit;
 }
@@ -105,4 +117,13 @@ body {
 .error {
     font-size: min(1.5vw, 4vh);
     align-self: center;
+}
+
+.graph-wrap{
+    display: flex;
+}
+
+.graph {
+    width: 50vw;
+    min-height: 50vh;
 }

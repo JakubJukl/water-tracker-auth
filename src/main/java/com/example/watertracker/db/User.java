@@ -1,27 +1,20 @@
 package com.example.watertracker.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Column(nullable = false, unique = true)
     private String username;
-
+    @JsonIgnore
     private String password;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @OneToMany(mappedBy="user")
+    private Set<DrinkRecord> records;
 
     public String getUsername() {
         return username;
@@ -37,5 +30,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<DrinkRecord> getRecords() {
+        return records;
+    }
+
+    public void setRecords(Set<DrinkRecord> records) {
+        this.records = records;
     }
 }

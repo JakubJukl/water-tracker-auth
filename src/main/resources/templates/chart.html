@@ -3,8 +3,8 @@
       xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-  <!--<link rel="stylesheet" th:href="@{/public/dark-style.css}">
-  <link rel="stylesheet" href="../static/dark-style.css">-->
+  <link rel="stylesheet" th:href="@{/public/dark-style.css}">
+  <!--<link rel="stylesheet" href="../static/dark-style.css">-->
     <title>Charts</title>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -13,44 +13,64 @@
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart);
 
+
     // Draw the chart and set the chart values
-    function drawChart() {
+    function drawChart(path = "/records") {
+      path = "/api"+path;
       $.ajax({
-        url: "/all",
+        url: path,
         dataType: "json",
         success: function (jsonData) {
+          jsonData = jsonData['_embedded']['content'];
             var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Task');
-            data.addColumn('number', 'Hours per Day');
-            data.addRow([jsonData[1].nick, jsonData[1].volume]);
-            data.addRow([jsonData[2].nick, jsonData[2].volume]);
-            // assumes "word" is a string and "count" is a number
-            /*data.addColumn('string', 'nick');
-            data.addColumn('number', 'volume');
-            console.warn(jsonData[1].nick);
-            data.addRow('ahoj', 300 );
-            data.addRow('nazdar',700);*/
-            /*for (var i = 0; i < jsonData.length; i++) {
-                data.addRow([jsonData[i].nick, jsonData[i].volume]);
-            }*/
+          data.addColumn('string', 'Date');
+          data.addColumn('number', 'Volume');
+          data.addColumn('string', 'Type');
+
+          $.each(jsonData, function (i, value){
+            data.addRow([value['created'].substring(0,10), value['volume'], value.type]);
+          });
+
+          var date_vol = google.visualization.data.group(
+                  data,
+                  [0],
+                  [{'column': 1, 'aggregation': google.visualization.data.sum, 'type': 'number'}]
+          );
+
+          var type_vol = google.visualization.data.group(
+                  data,
+                  [2],
+                  [{'column': 1, 'aggregation': google.visualization.data.sum, 'type': 'number'}]
+          );
+
             // Optional; add a title and set the width and height of the chart
-            var options = {'title':'My Average Day', 'width':550, 'height':400};
+            var options_pie = {
+              title: 'Volume by drink type',
+              backgroundColor: 'black',
+              legend: {textStyle: {color: 'white'}},
+              titleTextStyle: {color: 'white'}
+            };
+
+          var options_col = {
+            title: 'Volume by date',
+            backgroundColor: 'black',
+            vAxis: {minValue: 0, textStyle: {color: 'white'}},
+            hAxis: {textStyle: {color: 'white'}},
+            legend: {position: 'none'},
+            titleTextStyle: {color: 'white'},
+            colors: ['aqua'],
+            series: {0: {lineWidth: 5}}
+          };
+
 
             // Display the chart inside the <div> element with id="piechart"
-            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-            chart.draw(data, options);
+            var chart_type = new google.visualization.PieChart(document.getElementById('piechart-type'));
+            chart_type.draw(type_vol, options_pie);
+
+            var chart_name = new google.visualization.LineChart(document.getElementById('piechart-name'));
+            chart_name.draw(date_vol, options_col);
         }
       });
-
-        /*var jsonData = $.ajax({
-            url: "/all",
-            dataType: "json"
-        }).responseText;
-
-
-        var data = new google.visualization.DataTable(jsonData);*/
-
-
     }
   </script>
 </head>
@@ -68,6 +88,18 @@
     </form>
   </div>
 </nav>
-<div id="piechart"></div>
+<form class="basic-form" action="javascript:drawChart(path.value);" autocomplete="off">
+  <div class="container">
+    <label class="hidden" for="path">Path to api endpoint</label>
+    <input class="input" type="text" id="path" name="path" placeholder="path to api endpoint (e.g. '/records')"/>
+    <div id="buttons">
+      <input class="submit" id="submit" type="submit" value="Generate chart" />
+    </div>
+  </div>
+</form>
+<div class="graph-wrap">
+  <div id="piechart-type" class="graph"></div>
+  <div id="piechart-name" class="graph"></div>
+</div>
 </body>
 </html>

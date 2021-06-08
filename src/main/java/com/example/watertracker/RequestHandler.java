@@ -8,14 +8,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class RequestHandler {
 
-    public static String saveRecord(Integer volume, String nick, DrinkRecord.Type_of_drink type, DrinkRepository drinkRepo){
+    public static String saveRecord(Integer volume, User user, DrinkRecord.Type_of_drink type,
+                                    DrinkRepository drinkRepo){
         String message = "Saved successfully.";
-        if (volume <= 0 || nick.isBlank()){
+        if (volume <= 0){
             message = "All fields must be filled with valid values.";
         } else{
             DrinkRecord n = new DrinkRecord();
             n.setVolume(volume);
-            n.setNick(nick);
+            n.setUser(user);
             n.setType(type);
             drinkRepo.save(n);
         }

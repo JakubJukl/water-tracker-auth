@@ -8,12 +8,11 @@ import java.security.Principal;
 @Controller
 public class SecurityController {
 
-
-
-    @RequestMapping(value = "/username", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/username", method = RequestMethod.GET)
     @ResponseBody
     public String currentUserName(Principal principal) {
         return principal.getName();
     }
+
 
 }

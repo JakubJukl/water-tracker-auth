@@ -2,16 +2,17 @@ package com.example.watertracker;
 
 import com.example.watertracker.db.DrinkRecord;
 import com.example.watertracker.db.DrinkRepository;
-import com.example.watertracker.db.User;
 import com.example.watertracker.db.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.method.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
@@ -22,13 +23,7 @@ public class MainController {
     @Autowired
     private UserRepository userRepo;
 
-
-    @PostMapping(path="api/add")
-    public @ResponseBody String addNewRecord (@RequestParam Integer volume,
-    String nick, DrinkRecord.Type_of_drink type){
-    return RequestHandler.saveRecord(volume, nick, type, drinkRepo);
-    }
-
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ModelAndView handleError(HttpServletRequest req, MethodArgumentTypeMismatchException ex) {
         ModelAndView mav = new ModelAndView();
@@ -40,25 +35,6 @@ public class MainController {
         return mav;
     }
 
-    @GetMapping(path="/all")
-    public @ResponseBody Iterable<DrinkRecord> getAllUsers() {
-        // This returns a JSON or XML with the users
-        return drinkRepo.findAll();
-    }
-
-    @GetMapping(path="/all/{nick}")
-    public @ResponseBody
-    Iterable<DrinkRecord> getSpecificUser(@PathVariable("nick") String nick) {
-        // This returns a JSON or XML with the users
-        return drinkRepo.findByNick(nick);
-    }
-
-    @GetMapping(path="/all/{nick}/{volume}")
-    public @ResponseBody
-    Iterable<DrinkRecord> getUserVolume(@PathVariable("nick") String nick) {
-        // This returns a JSON or XML with the users
-        return drinkRepo.findByNick(nick);
-    }
 
     @GetMapping(path = {"", "/record"})
     public String record() {
@@ -68,7 +44,7 @@ public class MainController {
     @PostMapping(path={"","/record"})
     public String addNewRecord1 (@RequestParam Integer volume,
       DrinkRecord.Type_of_drink type, Model model, Principal principal){
-        model.addAttribute("message", RequestHandler.saveRecord(volume, principal.getName(), type, drinkRepo));
+        model.addAttribute("message", RequestHandler.saveRecord(volume, userRepo.findByUsername(principal.getName()), type, drinkRepo));
         return "record";
     }
 
@@ -100,4 +76,11 @@ public class MainController {
             return "signup";
         }
     }
+
+    @GetMapping(path = "/id")
+    @ResponseBody
+    public String test(){
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Actor Not Found");
+    }
+
 }
