@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
   <!--<link rel="stylesheet" th:href="@{/public/dark-style.css}">
@@ -60,6 +61,12 @@
       Drink tracker
     </a>
   </h1>
+  <div class="dropdown">
+    <span>User: </span><a id="username" sec:authentication="name"></a>
+    <form class="dropdown-content" method="post" th:action="@{/logout}">
+      <button type="submit" class="dropdown-item">Logout</button>
+    </form>
+  </div>
 </nav>
 <div id="piechart"></div>
 </body>

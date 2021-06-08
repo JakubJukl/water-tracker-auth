@@ -29,7 +29,7 @@
            <input class="input" id="volume" placeholder="Volume" name="volume" type="text">
            <label for="type" class="hidden">What did you drink: </label>
            <select class="input" id="type" name="type">
-               <option th:each="drinkOpt : ${T(com.example.watertracker.DrinkRecord.Type_of_drink).values()}"
+               <option th:each="drinkOpt : ${T(com.example.watertracker.db.DrinkRecord.Type_of_drink).values()}"
                    th:value="${drinkOpt}" th:text="${drinkOpt}"></option>
            </select>
            <input class="submit" id="submit-drink" type="submit" value="Send">
