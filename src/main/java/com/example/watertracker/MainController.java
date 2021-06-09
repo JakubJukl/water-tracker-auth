@@ -12,7 +12,6 @@ import org.springframework.web.method.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
@@ -42,7 +41,7 @@ public class MainController {
     }
 
     @PostMapping(path={"","/record"})
-    public String addNewRecord1 (@RequestParam Integer volume,
+    public String addNewRecord (@RequestParam Integer volume,
       DrinkRecord.Type_of_drink type, Model model, Principal principal){
         model.addAttribute("message", RequestHandler.saveRecord(volume, userRepo.findByUsername(principal.getName()), type, drinkRepo));
         return "record";
@@ -56,7 +55,7 @@ public class MainController {
     @GetMapping(path={"/login", "/public/login"})
     public String login(@RequestParam(defaultValue = "false") Boolean err, Model model) {
         if (err){
-            model.addAttribute("message", "Wrong user or password.");
+            model.addAttribute("message", "Wrong username or password.");
         }
         return "login";
     }
@@ -68,7 +67,7 @@ public class MainController {
 
     @PostMapping(path="public/sign")
     public String addNewUser (@RequestParam String username, String password, Model model){
-        String message = RequestHandler.refactorAddUser(username, password, userRepo);
+        String message = RequestHandler.saveUser(username, password, userRepo);
         model.addAttribute("message", message);
         if (message.equals("Registration succeeded.")){
             return "login";
@@ -82,5 +81,7 @@ public class MainController {
     public String test(){
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Actor Not Found");
     }
+
+
 
 }

@@ -23,7 +23,7 @@ public class RequestHandler {
         return message;
     }
 
-    public static String refactorAddUser(String username, String password, UserRepository userRepo){
+    public static String saveUser(String username, String password, UserRepository userRepo){
         String message = "Registration succeeded.";
         if (username.isBlank() || password.isBlank()){
             message = "All fields must be filled with valid values.";

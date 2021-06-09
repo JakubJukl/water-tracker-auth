@@ -1,5 +1,7 @@
 package com.example.watertracker.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -12,6 +14,7 @@ public class DrinkRecord {
     private int volume;
     private LocalDateTime created = LocalDateTime.now();
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="username", nullable = false)
     private User user;
