@@ -1,21 +1,23 @@
 package com.example.watertracker.db;
 
-import io.swagger.v3.oas.annotations.Hidden;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
+import org.springframework.lang.NonNull;
 
 @RepositoryRestResource(collectionResourceRel = "content", path = "users")
 public interface UserRepository extends JpaRepository<User, String> {
 
     @Override
     @RestResource(exported = false)
-    void delete(User user);
+    void delete(@NonNull User user);
 
+    @NotNull
     @Override
     @RestResource(exported = false)
-    User save(User record);
+    <S extends User> S save(@NonNull S  user);
 
 
     @RestResource(exported = false)

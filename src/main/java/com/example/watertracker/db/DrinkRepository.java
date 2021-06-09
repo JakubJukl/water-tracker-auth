@@ -1,27 +1,27 @@
 package com.example.watertracker.db;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.*;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.lang.NonNull;
 
 @RepositoryRestResource(collectionResourceRel = "content", path = "records")
 public interface DrinkRepository extends JpaRepository<DrinkRecord, Long> {
 
     @Override
     @RestResource(exported = false)
-    void delete(DrinkRecord record);
+    void delete(@NonNull DrinkRecord record);
 
+    @NotNull
     @Override
     @RestResource(exported = false)
-    DrinkRecord save(DrinkRecord record);
-
+    <S extends DrinkRecord> S save(@NonNull S  drinkRecord);
 
     List<DrinkRecord> findByCreatedAfter(@Param("date") @DateTimeFormat(iso =
             DateTimeFormat.ISO.DATE_TIME) LocalDateTime date);
