@@ -28,6 +28,8 @@ public class ApiSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/api/success")
                 .permitAll()
                 .and()
+                .httpBasic()
+                .and()
                 .csrf()
                 .disable();
     }
