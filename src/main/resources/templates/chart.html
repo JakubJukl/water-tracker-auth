@@ -28,7 +28,7 @@
           data.addColumn('string', 'Type');
 
           $.each(jsonData, function (i, value){
-            data.addRow([value['created'].substring(0,10), value['volume'], value.type]);
+            data.addRow([value['created'].substring(0,10), value['volume'], value['drinkType']]);
           });
 
           var date_vol = google.visualization.data.group(
@@ -43,7 +43,6 @@
                   [{'column': 1, 'aggregation': google.visualization.data.sum, 'type': 'number'}]
           );
 
-            // Optional; add a title and set the width and height of the chart
             var options_pie = {
               title: 'Volume by drink type',
               backgroundColor: 'black',
@@ -51,7 +50,7 @@
               titleTextStyle: {color: 'white'}
             };
 
-          var options_col = {
+          var options_line = {
             title: 'Volume by date',
             backgroundColor: 'black',
             vAxis: {minValue: 0, textStyle: {color: 'white'}},
@@ -62,13 +61,12 @@
             series: {0: {lineWidth: 5}}
           };
 
-
-            // Display the chart inside the <div> element with id="piechart"
+            // Display the chart inside the <div> element with id="piechart-type"
             var chart_type = new google.visualization.PieChart(document.getElementById('piechart-type'));
             chart_type.draw(type_vol, options_pie);
 
-            var chart_name = new google.visualization.LineChart(document.getElementById('piechart-name'));
-            chart_name.draw(date_vol, options_col);
+            var chart_date = new google.visualization.LineChart(document.getElementById('linechart-date'));
+            chart_date.draw(date_vol, options_line);
         }
       });
     }
@@ -99,7 +97,7 @@
 </form>
 <div class="graph-wrap">
   <div id="piechart-type" class="graph"></div>
-  <div id="piechart-name" class="graph"></div>
+  <div id="linechart-date" class="graph"></div>
 </div>
 </body>
 </html>

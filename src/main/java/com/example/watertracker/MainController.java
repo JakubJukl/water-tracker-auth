@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.method.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,7 +54,7 @@ public class MainController {
     @GetMapping(path={"/login", "/public/login"})
     public String login(@RequestParam(defaultValue = "false") Boolean err, Model model) {
         if (err){
-            model.addAttribute("message", "Wrong username or password.");
+            model.addAttribute("message", RequestHandler.LOGIN_ERROR);
         }
         return "login";
     }
@@ -69,19 +68,10 @@ public class MainController {
     public String addNewUser (@RequestParam String username, String password, Model model){
         String message = RequestHandler.saveUser(username, password, userRepo);
         model.addAttribute("message", message);
-        if (message.equals("Registration succeeded.")){
+        if (message.equals(RequestHandler.REGISTRATION_OK)){
             return "login";
         }else{
             return "signup";
         }
     }
-
-    @GetMapping(path = "/id")
-    @ResponseBody
-    public String test(){
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Actor Not Found");
-    }
-
-
-
 }

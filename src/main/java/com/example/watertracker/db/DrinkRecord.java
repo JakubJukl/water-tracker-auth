@@ -19,15 +19,15 @@ public class DrinkRecord {
     @JoinColumn(name="username", nullable = false)
     private User user;
 
-    public Type_of_drink getType() {
-        return type;
+    public Type_of_drink getDrinkType() {
+        return drinkType;
     }
 
-    public void setType(Type_of_drink type) {
-        this.type = type;
+    public void setDrinkType(Type_of_drink type) {
+        this.drinkType = type;
     }
 
-    private Type_of_drink type;
+    private Type_of_drink drinkType;
 
     public Long getId() {
         return id;

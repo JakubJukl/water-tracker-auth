@@ -13,6 +13,7 @@ public class ApiSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .antMatcher("/api/**")
                 .authorizeRequests()
+                .antMatchers( "/api/public/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

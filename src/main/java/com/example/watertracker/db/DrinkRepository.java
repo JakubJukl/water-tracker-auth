@@ -22,10 +22,13 @@ public interface DrinkRepository extends JpaRepository<DrinkRecord, Long> {
             DateTimeFormat.ISO.DATE_TIME) LocalDateTime start, @Param("end") @DateTimeFormat(iso =
             DateTimeFormat.ISO.DATE_TIME) LocalDateTime end);
 
-    List<DrinkRecord> findByType(@Param("type") DrinkRecord.Type_of_drink type);
+    List<DrinkRecord> findByDrinkType(@Param("type") DrinkRecord.Type_of_drink type);
 
-    DrinkRepository findByTypeAndVolume(@Param("type") DrinkRecord.Type_of_drink type, @Param("volume") Integer volume);
-
-    List<DrinkRecord> findByTypeOrType(@Param("type1") DrinkRecord.Type_of_drink type1,
+    List<DrinkRecord> findByDrinkTypeOrDrinkType(@Param("type1") DrinkRecord.Type_of_drink type1,
                                        @Param("type2") DrinkRecord.Type_of_drink type2);
+
+    List<DrinkRecord> findByCreatedBetweenAndDrinkType(
+            @Param("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
+            @Param("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end,
+            @Param("type") DrinkRecord.Type_of_drink type);
 }
