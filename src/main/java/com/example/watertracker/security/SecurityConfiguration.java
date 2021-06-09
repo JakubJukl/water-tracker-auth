@@ -1,6 +1,5 @@
 package com.example.watertracker.security;
 
-import com.example.watertracker.security.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -11,10 +10,16 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+/*
+ * This configuration is handled after ApiSecurityConfiguration and
+ * handles everything, that is not handled by Api...
+ */
 @Configuration
 @Order(2)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    /* Creating these Beans is just part of the right implementation
+       process, and only a part is specific (password encryption) */
     @Bean
     public UserDetailsService userDetailsService() {
         return new MyUserDetailsService();
@@ -35,10 +40,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
     }
 
+    /*
+     * Everyone can connect to '/public' paths. Else login is required.
+     */
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http

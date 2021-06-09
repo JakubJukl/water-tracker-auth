@@ -6,8 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.*;
 
-
+/*
+ * Implementation of UserDetailsService, needed for spring security
+ * authentication, authorization etc...
+ */
 public class MyUserDetailsService implements UserDetailsService {
+
+    // Actual 'users' table
     @Autowired
     private UserRepository userRepository;
 

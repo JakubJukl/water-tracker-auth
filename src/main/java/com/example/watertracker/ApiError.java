@@ -5,10 +5,18 @@ import org.springframework.http.HttpStatus;
 import java.util.Arrays;
 import java.util.List;
 
+/*
+ * Object to help with error handling
+ */
 public class ApiError {
 
+    // It stores the HTTP return status
     private HttpStatus status;
+
+    // An error message to display
     private String message;
+
+    // List of errors, that occurred
     private List<String> errors;
 
     public HttpStatus getStatus() {

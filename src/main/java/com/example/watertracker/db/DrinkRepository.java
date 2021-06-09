@@ -11,18 +11,31 @@ import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.NonNull;
 
+/* Class that draws (represents) data out of our db
+ * We can access endpoints starting by '/records' (actually it's '/api/records'
+ * because I changed the default path in application.properties).
+ */
 @RepositoryRestResource(collectionResourceRel = "content", path = "records")
 public interface DrinkRepository extends JpaRepository<DrinkRecord, Long> {
 
+    // I don't want users to be able to delete records from an endpoint
     @Override
     @RestResource(exported = false)
     void delete(@NonNull DrinkRecord record);
 
+    /*
+     * Users shouldn't be able to PUT/PATCH/POST directly into the 'table'
+     * (I know it's actually CrudRepository, but simplification never really
+     * killed anyone. Right?)
+     */
     @NotNull
     @Override
     @RestResource(exported = false)
     <S extends DrinkRecord> S save(@NonNull S  drinkRecord);
 
+    /* Bunch of methods that directly query the database (table/repository)
+       I listed only few, that I find interesting, but the possibilities are endless
+       They can be renamed or made to be as a standard query statement */
     List<DrinkRecord> findByCreatedAfter(@Param("date") @DateTimeFormat(iso =
             DateTimeFormat.ISO.DATE_TIME) LocalDateTime date);
 
