@@ -5,7 +5,7 @@
 Change database settings in application.properties to fit for your database.
 
 API documentation is available at `/api/public/docs` (json or add .yaml 
-for yaml) and documentation with ui documentation at `/api/public/swagger`.
+for yaml) and documentation with ui at `/api/public/swagger`.
 
 ### Authentication System
 
@@ -22,9 +22,23 @@ Except these pages:
 - `/login`
 - `/public/sign`
 
-You can login via API POST request to  `/api/login`with 
+You can log in via API POST request to  `/api/login` with 
 username & password as parameters if you do not want to use headers
 to authenticate.
+
+### Charts Creation Page
+
+The application uses **Google Charts** to generate charts. 
+By default, charts generate from `/records` endpoint. You can
+change the endpoint by filling it into the text input and 
+submitting with a button.
+
+**Use only endpoints. Do not prepend `/api`.**
+
+Examples:
+
+- `/users/Adam/records` Displays all records of Adam
+- `/records/search/findByDrinkType?type=WATER` Displays all records, where the type is WATER 
 
 ### Example DDL
 ```SQL
@@ -54,8 +68,8 @@ alter table drinks
 
 ### Example Insert
 
-This creates 4 users with respective names `Adam`,`Bedrich`,
-`Cecilka` and `Dan`. Every user has password 
+This creates 4 users with respective names `Adam`, `Bedrich`,
+ `Cecilka` and `Dan`. Every user has password 
 `heslo`.
 
 ```SQL
