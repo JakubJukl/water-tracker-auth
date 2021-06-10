@@ -119,3 +119,9 @@ VALUES
 (33,'2021-06-10 00:04:33.424452', 0, 300, 'Adam'),
 (34,'2021-06-10 10:04:33.424452', 0, 300, 'Dan');
 ```
+
+### What to Improve
+
+- Using Thymeleaf fragmentation would be preferred over normal HTML templates.
+- Not handling POST requests with MVC at all
+- Implement @Validator
