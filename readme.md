@@ -125,3 +125,4 @@ VALUES
 - Using Thymeleaf fragmentation would be preferred over normal HTML templates.
 - Not handling POST requests with MVC at all
 - Implement @Validator
+- Add test requests
