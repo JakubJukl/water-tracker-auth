@@ -6,9 +6,13 @@ import com.example.watertracker.db.User;
 import com.example.watertracker.db.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-
+/*
+ * Contains methods, that would otherwise be repeating in Controllers,
+ * because of the web application's dual design, that I made
+ */
 public class RequestHandler {
 
+    // String constants to pass messages
     public static final String VOLUME_ERROR = "Volume must be a valid integer.";
     public static final String TYPE_ERROR = "Type of drink must be valid type of drink.";
     public static final String USERNAME_ERROR = "Username is already taken.";
@@ -17,6 +21,9 @@ public class RequestHandler {
     public static final String REGISTRATION_OK = "Registration succeeded.";
     public static final String LOGIN_ERROR = "Wrong username or password.";
 
+    /*
+     * Checks if given data are OK and saves DrinkRecord to database.
+     */
     public static String saveRecord(Integer volume, User user, DrinkRecord.Type_of_drink type,
                                     DrinkRepository drinkRepo){
         String message = SAVE_OK;
@@ -34,6 +41,10 @@ public class RequestHandler {
         return message;
     }
 
+    /*
+     * Checks if given data are OK, generates encoded password
+     * and saves User to database.
+     */
     public static String saveUser(String username, String password, UserRepository userRepo){
         String message = REGISTRATION_OK;
         if (username.isBlank() || password.isBlank()){
