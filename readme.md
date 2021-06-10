@@ -41,6 +41,9 @@ Examples:
 - `/records/search/findByDrinkType?type=WATER` Displays all records, where the type is WATER 
 
 ### Example DDL
+
+Don't forget to change the owner to the user, that spring uses to connect to the database.
+
 ```SQL
 CREATE TABLE users (
     username VARCHAR(255) NOT NULL,
