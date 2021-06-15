@@ -14,7 +14,7 @@ public class DrinkRecord {
 
     // Automatically incremented ID
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     // How much did user drink
